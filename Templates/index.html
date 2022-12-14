@@ -1,17 +1,26 @@
-<h1>Hellooo world!!!</h1>
+{% extends 'base.html' %}
 
-<p>My first name is {{ first_name }}</p>
-<p>My last name is {{ last_name }}</p>
-<p>My middle name is {{ middle_name }}</p>
+{% block content %}
 
-<h3>Favourite Pizza Toppings</h3>
 
-{% for toppings in favourite_pizza %}
-    {{ toppings }}<br/>
-{% endfor %}
+    <h1>Hellooo world!!!</h1>
 
-<br/><br/>
+    <p>My first name is {{ first_name }}</p>
+    <p>My last name is {{ last_name }}</p>
+    <p>My middle name is {{ middle_name }}</p>
 
-{{ favourite_pizza.1 }}
-{{ favourite_pizza.2 }}
-{{ favourite_pizza.3 }}
+    <h3>Favourite Pizza Toppings</h3>
+
+    {% for toppings in favourite_pizza %}
+        {{ toppings }}<br/>
+    {% endfor %}
+
+    
+
+    {{ favourite_pizza.1 }}
+    {{ favourite_pizza.2 }}
+    {{ favourite_pizza.3 }}
+
+
+    <br/><br/>
+{% endblock %}

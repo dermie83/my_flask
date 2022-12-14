@@ -9,7 +9,7 @@ app = Flask(__name__)
 
 def index():
     first_name = "Susan"
-    last_name = "Parson"
+    last_name = "Parsons"
     middle_name = "Elizabeth"
 
     favourite_pizza = ['pepperoni','Cheese','Mushroom','Shite']
