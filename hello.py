@@ -9,9 +9,11 @@ app = Flask(__name__)
 
 def index():
     first_name = "Susan"
+    last_name = "Parson"
+    middle_name = "Elizabeth"
 
     favourite_pizza = ['pepperoni','Cheese','Mushroom','Shite']
-    return render_template("index.html", first_name = first_name,
+    return render_template("index.html", first_name = first_name, last_name=last_name, middle_name=middle_name,
                         favourite_pizza = favourite_pizza)
 
 
