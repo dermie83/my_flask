@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, flash
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired
@@ -22,6 +22,7 @@ def index():
     first_name = "Susan"
     last_name = "Parsons"
     middle_name = "Elizabeth"
+    flash("Welcome to dermiesite!")
 
     favourite_pizza = ['pepperoni','Cheese','Mushroom','Shite']
     return render_template("index.html", first_name = first_name, last_name=last_name, middle_name=middle_name,
@@ -50,7 +51,14 @@ def server_error(e):
 # Create a Name Page
 @app.route('/name', methods = ['GET', 'POST'])
 def name():
-    return render_template("name.html")
+    name = None
+    form = NamerForm()
+    # validate form
+    if form.validate_on_submit():
+        name = form.name.data
+        form.name.data = ""
+        flash("Form submitted successfully!")
+    return render_template("name.html", name=name, form=form)
 
 
 if __name__ == '__main__':
