@@ -7,8 +7,11 @@ from datetime import datetime
 
 
 app = Flask(__name__)
-# Add Databse
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
+# old sqlite3 db
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
+# New Mysql db
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://username:password@localhost/db_name'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:password1234@localhost/our_users'
 # Secret key!
 app.config['SECRET_KEY'] = "arse_buscuits"
 # initialise the Database
@@ -25,13 +28,13 @@ class Users(db.Model):
     def __repr__(self):
         return '<Name %r>' % self.name
 
-# with app.app_context():
-#     db.create_all()
+with app.app_context():
+    db.create_all()
 
-#     db.session.add(Users(name="example 1", email = 'dermiemadsen@gmail.com'))
-#     db.session.commit()
+    db.session.add(Users(name="Dermie", email = 'dermiemadsen@gmail.com'))
+    db.session.commit()
 
-#     users = db.session.execute(db.select(Users)).scalars()
+    users = db.session.execute(db.select(Users)).scalars()
 
 
 # Create a Form Class
