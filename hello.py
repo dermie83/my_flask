@@ -49,7 +49,7 @@ class NamerForm(FlaskForm):
 
 @app.route('/user/add', methods = ['GET', 'POST'])
 def add_user():
-    form = None
+    username = None
     form = UserForm()
     # validate form
     if form.validate_on_submit():
@@ -58,12 +58,12 @@ def add_user():
             user = Users(name=form.name.data, email=form.email.data)
             db.session.add(user)
             db.session.commit()
-        name = form.name.data
+        username = form.name.data
         form.name.data = ''
         form.email.data = ''
         flash("User details added successfully!")
     our_users = Users.query.order_by(Users.date_added)
-    return render_template("add_user.html", 
+    return render_template("add_user.html", name=username,
                             form = form, 
                             our_users = our_users)
 
