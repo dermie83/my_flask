@@ -1,4 +1,4 @@
-from flask import Flask, render_template, flash
+from flask import Flask, render_template, flash, request
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired
@@ -17,6 +17,7 @@ app.config['SECRET_KEY'] = "arse_buscuits"
 # initialise the Database
 db = SQLAlchemy(app)
 
+
 # Create Model
 class Users(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -28,20 +29,46 @@ class Users(db.Model):
     def __repr__(self):
         return '<Name %r>' % self.name
 
-with app.app_context():
-    db.create_all()
+# with app.app_context():
+#     db.create_all()
 
-    db.session.add(Users(name="Dermie", email = 'dermiemadsen@gmail.com'))
-    db.session.commit()
+#     db.session.add(Users(name="Dermie", email = 'dermiemadsen@gmail.com'))
+#     db.session.commit()
 
-    users = db.session.execute(db.select(Users)).scalars()
+#     users = db.session.execute(db.select(Users)).scalars()
 
 
 # Create a Form Class
 class UserForm(FlaskForm):
-    name = StringField("User name? ", validators=[DataRequired()])
-    email = StringField("User email? ", validators=[DataRequired()])
+    name = StringField("User name ", validators=[DataRequired()])
+    email = StringField("User email ", validators=[DataRequired()])
     submit = SubmitField("Submit")
+
+
+# Update Record
+@app.route('/update/<int:id>', methods = ['GET', 'POST'])
+def update(id):
+    form = UserForm()
+    user_to_update = Users.query.get_or_404(id)
+    if request.method == 'POST':
+        user_to_update.name = request.form['name']
+        user_to_update.email = request.form['email']
+        try:
+            db.session.commit()
+            flash("User details updated successfully!")
+            return render_template('update.html', 
+            form = form, 
+            user_to_update=user_to_update)
+        except:
+            flash("Error! Something went wrong, please try again...")
+            return render_template('update.html', 
+            form = form, 
+            user_to_update=user_to_update)
+    else:
+        return render_template('update.html', 
+            form = form, 
+            user_to_update=user_to_update)
+
 
 
 # Create a Form Class

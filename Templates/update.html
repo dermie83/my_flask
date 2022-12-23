@@ -10,7 +10,7 @@
 {% endfor %}
 
 {% if name %}
-    <h1>User added!</h1>
+    <h1>Update user details...</h1>
     <br/><br/>
 <table class="table table-danger table-striped">
 {% for our_user in our_users %}
@@ -22,31 +22,23 @@
 </table>
 
 {% else %}
-    <h1>User List:</h1>
+    <h1>Update details:</h1>
     <br/>
     <div class="shadow p-3 mb-5 bg-body rounded">
-    <form method="POST">
+    <form action = "/update/{{user_to_update.id}}" method="POST">
         {{ form.hidden_tag() }}
 
         {{ form.name.label(class="form-label") }}
-        {{ form.name(class="form-control") }}
+        {{ form.name(class="form-control", value=user_to_update.name) }}
         <br/>
         {{ form.email.label(class="form-label") }}
-        {{ form.email(class="form-control") }}
+        {{ form.email(class="form-control", value=user_to_update.email) }}
         <br/>
         {{ form.submit(class="btn btn-primary") }}
 
     </form>
 </div>
 <br/><br/><br/>
-<table class="table table-danger table-striped">
-{% for our_user in our_users %}
-    <tr>
-    <td>{{our_user.id}}. <a href="{{url_for('update', id=our_user.id)}}">{{our_user.name}}</a>-{{our_user.email}}</td>
-    </tr>
-
-{% endfor %}
-</table>
 
 {% endif %}    
 
