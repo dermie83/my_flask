@@ -21,11 +21,6 @@ db = SQLAlchemy(app)
 # migrate changes to app with db
 migrate = Migrate(app, db)
 
-# manager = Manager(app)
-
-# manager.add_command('db')
-
-
 
 # Create Model
 class Users(db.Model):
