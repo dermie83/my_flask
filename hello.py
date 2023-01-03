@@ -3,6 +3,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired
 from flask_migrate import Migrate
+#from flask_script import Manager
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 
@@ -19,6 +20,11 @@ app.config['SECRET_KEY'] = "arse_buscuits"
 db = SQLAlchemy(app)
 # migrate changes to app with db
 migrate = Migrate(app, db)
+
+# manager = Manager(app)
+
+# manager.add_command('db')
+
 
 
 # Create Model
