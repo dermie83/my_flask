@@ -8,6 +8,13 @@ from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 
 
+# set FLASK_APP=hello.py
+#### this initiates the db
+# flask --app hello.py db init
+#### this calls the migration
+# flask --app hello.py db migrate
+
+
 app = Flask(__name__)
 # old sqlite3 db
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
@@ -189,6 +196,7 @@ def name():
 if __name__ == '__main__':
 
    app.run()
+
 
 
 
