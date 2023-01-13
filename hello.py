@@ -122,6 +122,12 @@ def update(id):
             id=id)
 
 
+# Create a Form Class
+class PasswordForm(FlaskForm):
+    email = StringField("Email:", validators=[DataRequired()])
+    password_hash = PasswordField("Password:", validators=[DataRequired()])
+    submit = SubmitField("Submit")
+
 
 # Create a Form Class
 class NamerForm(FlaskForm):
@@ -184,6 +190,24 @@ def page_not_found(e):
 @app.errorhandler(500)
 def server_error(e):
     return render_template("500.html"), 500
+
+
+# Create a password test Page
+@app.route('/test_pw', methods = ['GET', 'POST'])
+def test_pw():
+    email = None
+    password = None
+    pw_to_check = None
+    passed = None
+    form = PasswordForm()
+    # validate form
+    if form.validate_on_submit():
+        email = form.email.data
+        password = form.password_hash.data
+        form.email.data = ""
+        form.password_hash.data = ""
+        #flash("Form submitted successfully!")
+    return render_template("test_pw.html", email=email, password=password, form=form)
 
 
 # Create a Name Page
