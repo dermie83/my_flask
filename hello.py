@@ -157,8 +157,8 @@ def add_user():
         flash("User details added successfully!")
     our_users = Users.query.order_by(Users.date_added)
     return render_template("add_user.html", name=username,
-                            form = form, 
-                            our_users = our_users)
+                                            form = form, 
+                                            our_users = our_users)
 
 
 @app.route('/')
@@ -169,8 +169,10 @@ def index():
     flash("Welcome to dermiesite!")
 
     favourite_pizza = ['pepperoni','Cheese','Mushroom','Shite']
-    return render_template("index.html", first_name = first_name, last_name=last_name, middle_name=middle_name,
-                        favourite_pizza = favourite_pizza)
+    return render_template("index.html", first_name = first_name, 
+                                        last_name=last_name, 
+                                        middle_name=middle_name,
+                                        favourite_pizza = favourite_pizza)
 
 
 @app.route('/user/<name>')
@@ -197,7 +199,7 @@ def server_error(e):
 def test_pw():
     email = None
     password = None
-    pw_to_check = None
+    user_to_check = None
     passed = None
     form = PasswordForm()
     # validate form
@@ -206,8 +208,19 @@ def test_pw():
         password = form.password_hash.data
         form.email.data = ""
         form.password_hash.data = ""
-        #flash("Form submitted successfully!")
-    return render_template("test_pw.html", email=email, password=password, form=form)
+
+        # Look up user by email address
+        user_to_check = Users.query.filter_by(email=email).first()
+
+        # Check Hashed Password
+        passed = check_password_hash(user_to_check.password_hash, password)
+        
+    return render_template("test_pw.html", 
+                            email=email, 
+                            password=password, 
+                            user_to_check = user_to_check,
+                            passed = passed,
+                            form=form)
 
 
 # Create a Name Page
